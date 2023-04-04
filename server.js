@@ -24,11 +24,11 @@ const io = require('socket.io')(server, {
   }
 })
 
-app.use(express.static(path.join(__dirname, './mern-chat-frontend/build')))
-app.get('/', (req, res) => {
-  // res.sendFile(path.join(__dirname, './mern-chat-frontend/build/index.html'))
-  req.send('Data Is Connected')
-})
+// app.use(express.static(path.join(__dirname, './mern-chat-frontend/build')))
+// app.get('/', (req, res) => {
+//   // res.sendFile(path.join(__dirname, './mern-chat-frontend/build/index.html'))
+//   req.send('Data Is Connected')
+// })
 
 
 async function getLastMessagesFromRoom(room) {
