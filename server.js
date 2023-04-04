@@ -6,13 +6,14 @@ const Message = require('./models/Message')
 const rooms = ['general', 'tech', 'finance', 'crypto'];
 const cors = require('cors');
 const path = require('path')
-
+require('dotenv').config();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
 
 app.use('/users', userRoutes)
 require('./connection')
+const db = require('./connection')
 
 const server = require('http').createServer(app);
 const PORT = 5001;
@@ -24,8 +25,9 @@ const io = require('socket.io')(server, {
 })
 
 app.use(express.static(path.join(__dirname, './mern-chat-frontend/build')))
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, './mern-chat-frontend/build/index.html'))
+app.get('/', (req, res) => {
+  // res.sendFile(path.join(__dirname, './mern-chat-frontend/build/index.html'))
+  req.send('Data Is Connected')
 })
 
 
