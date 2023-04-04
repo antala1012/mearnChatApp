@@ -15,13 +15,13 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  // picture: {
-  //   type: String,
-  // },
-  // newMessages: {
-  //   type: Object,
-  //   default: {}
-  // },
+  picture: {
+    type: String,
+  },
+  newMessages: {
+    type: Object,
+    default: {}
+  },
   status: {
     type: String,
     default: 'online'
