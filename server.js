@@ -19,7 +19,7 @@ const server = require('http').createServer(app);
 const PORT = 5001;
 const io = require('socket.io')(server, {
   cors: {
-    origin: 'https://meettome.netlify.app',
+    origin: '*',
     methods: ['GET', 'POST']
   }
 })
@@ -70,6 +70,16 @@ io.on('connection', (socket) => {
 
   socket.on('message-room', async (room, content, sender, time, date) => {
     const newMessage = await Message.create({ content, from: sender, time, date, to: room });
+    let roomMessages = await getLastMessagesFromRoom(room);
+    roomMessages = sortRoomMessagesByDate(roomMessages);
+    // sending message to room
+    io.to(room).emit('room-messages', roomMessages);
+    socket.broadcast.emit('notifications', room)
+  })
+
+  socket.on('delete-message', async (id, room) => {
+    const newMessage = await Message.findByIdAndDelete({ _id: id });
+    console.log("gggg", newMessage);
     let roomMessages = await getLastMessagesFromRoom(room);
     roomMessages = sortRoomMessagesByDate(roomMessages);
     // sending message to room
