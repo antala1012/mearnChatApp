@@ -60,12 +60,14 @@ io.on('connection', (socket) => {
     io.emit('new-user', members)
   })
 
-  socket.on('new_notification', function (data) {
-    console.log(data.title, data.message);
-    io.sockets.emit('show_notification', {
-      message: data.message,
-    });
-  });
+  socket.on('send to server', function (data) {
+    socket.broadcast('notification', 'test data');
+  })
+
+  socket.on('send to server', function (data) {
+    const socketId = getSocketIdFromUserId(user_id);
+    io.to(socketId).emit('notification', 'test data');
+  })
 
   socket.on('join-room', async (newRoom, previousRoom) => {
     socket.join(newRoom);
