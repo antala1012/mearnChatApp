@@ -60,6 +60,13 @@ io.on('connection', (socket) => {
     io.emit('new-user', members)
   })
 
+  socket.on('new_notification', function (data) {
+    console.log(data.title, data.message);
+    io.sockets.emit('show_notification', {
+      message: data.message,
+    });
+  });
+
   socket.on('join-room', async (newRoom, previousRoom) => {
     socket.join(newRoom);
     socket.leave(previousRoom);
