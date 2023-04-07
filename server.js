@@ -61,7 +61,7 @@ io.on('connection', (socket) => {
   })
 
   socket.on('send to server', function (data) {
-    socket.broadcast('notification', 'test data');
+    socket.broadcast.emit('notification', 'test data');
   })
 
   socket.on('send to server', function (data) {
