@@ -69,6 +69,13 @@ io.on('connection', (socket) => {
     io.to(socketId).emit('notification', 'test data');
   })
 
+  socket.on('send-notification', (data) => {
+    console.log(`Received notification: ${data.message}`);
+
+    // Send the notification to all connected clients except the sender
+    socket.broadcast.emit('receive-notification', data);
+  });
+
   socket.on('join-room', async (newRoom, previousRoom) => {
     socket.join(newRoom);
     socket.leave(previousRoom);
